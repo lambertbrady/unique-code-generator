@@ -4,10 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = __importDefault(require("node-fetch"));
-// A random 6-character code
-// Each code generated is composed of characters `A-Z` and numbers `0-9`, excluding characters that are ambiguous to read: I (eye), L (el), 1 (one), 0 (zero), O (oh)
-// Each code generated does not contain any forbidden words in this list, consecutive (RATS42) or non-consecutive (3RQATS).
-// The provided list is a small sampling for this problem. In practice, our forbidden word list has around 50-100 words.
 async function fetchWords() {
     let response;
     let text;
