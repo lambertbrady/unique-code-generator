@@ -8,6 +8,8 @@
       "typescript": "^3.7.4"
    },
    "scripts": {
-      "test": "node ./node_modules/.bin/jasmine"
+      "build": "node ./node_modules/.bin/tsc",
+      "test": "node ./node_modules/.bin/jasmine",
+      "start": "func() { node ./dist/${1-code\"-\"generator.js}; }; func"
    }
 }
