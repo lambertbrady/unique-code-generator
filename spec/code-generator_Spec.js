@@ -56,12 +56,19 @@ describe('containsWord', function() {
 });
 
 describe('genCode', function() {
+   const codeLength = 6;
    const mockCharList = ['a','b','c','d','e'];
+   const mockWordList = ['abc', 'bed']
    it('throws error if first argument has length less than or equal to 0', function() {
-      expect(() => funcs.genCode(0, mockCharList)).toThrow();
-      expect(() => funcs.genCode(-1, mockCharList)).toThrow();
+      expect(() => funcs.genCode(0, mockCharList, mockWordList)).toThrow();
+      expect(() => funcs.genCode(-1, mockCharList, mockWordList)).toThrow();
    });
    it('throws error if first argument is not an integer', function() {
-      expect(() => funcs.genCode(.5, mockCharList)).toThrow();
+      expect(() => funcs.genCode(.5, mockCharList, mockWordList)).toThrow();
    });
+   for(let i = 0; i < 10; i++) {
+      it('returns string with length same as first argument', function() {
+         expect(funcs.genCode(codeLength, mockCharList, mockWordList).length).toEqual(codeLength);
+      });
+   }
 });
