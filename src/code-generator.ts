@@ -28,6 +28,9 @@ export function getRandomArray<T>(length: number, charList: T[]): T[] {
 }
 
 export function containsWord(testStr: string, word: string): boolean {
+   if (testStr.length === 0 || word.length === 0) {
+      throw new Error("Each argument must be string with length greater than 0");
+   }
    // match 0 or more instances of any character
    const matcher: string = '.*';
    // pattern for 'test' is '.*t.*e.*s.*t.*'
@@ -36,6 +39,9 @@ export function containsWord(testStr: string, word: string): boolean {
 }
 
 export function genCode(codeLength: number, charList: Array<string>, wordList: Array<string>): string {
+   if (!Number.isInteger(codeLength) || codeLength <= 0) {
+      throw new Error('First argument must be an integer greater than 0');
+   }
    // convert random array to string
    const code: string = getRandomArray(codeLength, charList).join('');
    // ignore any word whose length is greater than codeLength, then set match to true if any word is contained in code string
