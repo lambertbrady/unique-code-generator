@@ -14,7 +14,10 @@ View code for the Desmos anagram coding exercise here: https://codepen.io/bradyl
 
 1. Clone this repository and add dependencies:
 
-      `npm install desmos-code-generator`
+      ```
+      git clone https://github.com/lambertbrady/desmos-code-generator.git
+      npm install
+      ```
   
 2. Compile TypeScript files in `src/`:
 
