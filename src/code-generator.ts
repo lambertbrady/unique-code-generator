@@ -1,5 +1,9 @@
 const fetch =  require('node-fetch');
 
+const codeLength: number = 6;
+const charsIncluded: Array<string> = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+const charsExcluded: Array<string> = ['I', 'L', '1', '0', 'O'];
+
 export async function fetchWords(): Promise<Array<string>> {
    let text: string;
    try {
@@ -55,11 +59,8 @@ export function genCode(codeLength: number, charList: Array<string>, wordList: A
    return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 
-const charsAlphaNumeric: Array<string> = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
-const charsExcluded: Array<string> = ['I', 'L', '1', '0', 'O'];
-
-const charsPossible = getArrayDifference(charsAlphaNumeric, charsExcluded);
+const charsPossible = getArrayDifference(charsIncluded, charsExcluded);
 fetchWords().then(words => {
-   const code = genCode(6, charsPossible, words);
+   const code = genCode(codeLength, charsPossible, words);
    console.log(`//////////////\n/// ${code} ///\n//////////////`);
 });

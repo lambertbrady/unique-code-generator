@@ -57,6 +57,9 @@ var __spread = (this && this.__spread) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fetch = require('node-fetch');
+var codeLength = 6;
+var charsIncluded = __spread('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+var charsExcluded = ['I', 'L', '1', '0', 'O'];
 function fetchWords() {
     return __awaiter(this, void 0, void 0, function () {
         var text, response, error_1;
@@ -124,10 +127,8 @@ function genCode(codeLength, charList, wordList) {
     return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 exports.genCode = genCode;
-var charsAlphaNumeric = __spread('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-var charsExcluded = ['I', 'L', '1', '0', 'O'];
-var charsPossible = getArrayDifference(charsAlphaNumeric, charsExcluded);
+var charsPossible = getArrayDifference(charsIncluded, charsExcluded);
 fetchWords().then(function (words) {
-    var code = genCode(6, charsPossible, words);
+    var code = genCode(codeLength, charsPossible, words);
     console.log("//////////////\n/// " + code + " ///\n//////////////");
 });
