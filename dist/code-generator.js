@@ -96,6 +96,9 @@ function getRandomElement(array) {
 }
 exports.getRandomElement = getRandomElement;
 function getRandomArray(length, charList) {
+    if (charList.length <= 1) {
+        throw new Error('character list must have at least one element');
+    }
     // convert charList to Set, which removes any duplicate values, and then convert back to Array
     var charsUnique = __spread(new Set(charList));
     // create array with specified length and fill with random characters from list, then convert to string

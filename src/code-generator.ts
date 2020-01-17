@@ -30,6 +30,9 @@ export function getRandomElement<T>(array: T[]): T {
 }
 
 export function getRandomArray<T>(length: number, charList: T[]): T[] {
+   if (charList.length <= 1) {
+      throw new Error('character list must have at least one element');
+   }
    // convert charList to Set, which removes any duplicate values, and then convert back to Array
    const charsUnique = [...new Set(charList)];
    // create array with specified length and fill with random characters from list, then convert to string

@@ -1,11 +1,5 @@
 const funcs = require('../dist/code-generator');
 
-// describe('fetchWords', function() {
-//    it('', function() {
-//       expect(funcs.fetchWords());
-//    });
-// });
-
 describe('getArrayDifference', function() {
    const mockArrA = [1,2,3,4];
    const mockArrB = [3,4,5,6];
@@ -31,11 +25,18 @@ describe('getRandomElement', function() {
    }
 });
 
-// describe('getRandomArray', function() {
-//    it('', function() {
-//       expect(funcs.getRandomArray());
-//    });
-// });
+describe('getRandomArray', function() {
+   const arrLength = 10;
+   it('retrn array with length equal to first argument', function() {
+      expect(funcs.getRandomArray(arrLength, ['a','b','c']).length).toEqual(arrLength);
+   });
+   it('retrn array with length equal to first argument, duplicate chars', function() {
+      expect(funcs.getRandomArray(arrLength, ['a','b','c','c']).length).toEqual(arrLength);
+   });
+   it('throws error if array is empty', function() {
+      expect(() => funcs.getRandomArray(arrLength, []).length).toThrow();
+   });
+});
 
 describe('containsWord', function() {
    const mockStr = 'apple';
