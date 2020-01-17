@@ -57,17 +57,21 @@ var __spread = (this && this.__spread) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fetch = require('node-fetch');
+// number defining length of code to be generated
 var codeLength = 6;
-var charsIncluded = __spread('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-var charsExcluded = ['I', 'L', '1', '0', 'O'];
-function fetchWords() {
+// character arrays defining possible characters for use in generating code
+var codeCharsIncluded = __spread('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+var codeCharsExcluded = ['I', 'L', '1', '0', 'O'];
+// url of forbidden word list
+var codeWordsForbiddenURL = 'https://gitcdn.link/repo/ahamburger/8f609c3a57aee907bd426ef66cd6fb1a/raw/1bef175bfa7da130f0f1ea723b625f0f9a0ce5cb/desmos_distracting_words';
+function fetchWords(url) {
     return __awaiter(this, void 0, void 0, function () {
         var text, response, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, fetch('https://gitcdn.link/repo/ahamburger/8f609c3a57aee907bd426ef66cd6fb1a/raw/1bef175bfa7da130f0f1ea723b625f0f9a0ce5cb/desmos_distracting_words')];
+                    return [4 /*yield*/, fetch(url)];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.text()];
@@ -127,8 +131,8 @@ function genCode(codeLength, charList, wordList) {
     return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 exports.genCode = genCode;
-var charsPossible = getArrayDifference(charsIncluded, charsExcluded);
-fetchWords().then(function (words) {
+var charsPossible = getArrayDifference(codeCharsIncluded, codeCharsExcluded);
+fetchWords(codeWordsForbiddenURL).then(function (words) {
     var code = genCode(codeLength, charsPossible, words);
     console.log("//////////////\n/// " + code + " ///\n//////////////");
 });

@@ -1,13 +1,18 @@
 const fetch =  require('node-fetch');
 
+// number defining length of code to be generated
 const codeLength: number = 6;
-const charsIncluded: Array<string> = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
-const charsExcluded: Array<string> = ['I', 'L', '1', '0', 'O'];
+// character arrays defining possible characters for use in generating code
+const codeCharsIncluded: Array<string> = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+const codeCharsExcluded: Array<string> = ['I', 'L', '1', '0', 'O'];
 
-export async function fetchWords(): Promise<Array<string>> {
+// url of forbidden word list
+const codeWordsForbiddenURL: string = 'https://gitcdn.link/repo/ahamburger/8f609c3a57aee907bd426ef66cd6fb1a/raw/1bef175bfa7da130f0f1ea723b625f0f9a0ce5cb/desmos_distracting_words';
+
+export async function fetchWords(url: string): Promise<Array<string>> {
    let text: string;
    try {
-      const response = await fetch('https://gitcdn.link/repo/ahamburger/8f609c3a57aee907bd426ef66cd6fb1a/raw/1bef175bfa7da130f0f1ea723b625f0f9a0ce5cb/desmos_distracting_words');
+      const response = await fetch(url);
       text = await response.text();
    } catch (error) {
       throw new Error(error);
@@ -59,8 +64,8 @@ export function genCode(codeLength: number, charList: Array<string>, wordList: A
    return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 
-const charsPossible = getArrayDifference(charsIncluded, charsExcluded);
-fetchWords().then(words => {
+const charsPossible = getArrayDifference(codeCharsIncluded, codeCharsExcluded);
+fetchWords(codeWordsForbiddenURL).then(words => {
    const code = genCode(codeLength, charsPossible, words);
    console.log(`//////////////\n/// ${code} ///\n//////////////`);
 });
