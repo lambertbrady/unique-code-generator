@@ -25,16 +25,16 @@ describe('getRandomElement', function() {
    }
 });
 
-describe('getRandomArray', function() {
+describe('genArrayRandom', function() {
    const arrLength = 10;
    it('retrn array with length equal to first argument', function() {
-      expect(funcs.getRandomArray(arrLength, ['a','b','c']).length).toEqual(arrLength);
+      expect(funcs.genArrayRandom(arrLength, ['a','b','c']).length).toEqual(arrLength);
    });
    it('retrn array with length equal to first argument, duplicate chars', function() {
-      expect(funcs.getRandomArray(arrLength, ['a','b','c','c']).length).toEqual(arrLength);
+      expect(funcs.genArrayRandom(arrLength, ['a','b','c','c']).length).toEqual(arrLength);
    });
    it('throws error if array is empty', function() {
-      expect(() => funcs.getRandomArray(arrLength, []).length).toThrow();
+      expect(() => funcs.genArrayRandom(arrLength, []).length).toThrow();
    });
 });
 

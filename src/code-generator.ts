@@ -29,16 +29,6 @@ export function getRandomElement<T>(array: T[]): T {
    return array[Math.floor(Math.random() * array.length)];
 }
 
-export function getRandomArray<T>(length: number, charList: T[]): T[] {
-   if (charList.length <= 1) {
-      throw new Error('character list must have at least one element');
-   }
-   // convert charList to Set, which removes any duplicate values, and then convert back to Array
-   const charsUnique = [...new Set(charList)];
-   // create array with specified length and fill with random characters from list, then convert to string
-   return [...Array(length)].map(() => getRandomElement(charsUnique));
-}
-
 export function containsWord(testStr: string, word: string, matchCase: boolean = false): boolean {
    if (testStr.length === 0 || word.length === 0) {
       throw new Error("Each argument must be string with length greater than 0");
@@ -52,12 +42,22 @@ export function containsWord(testStr: string, word: string, matchCase: boolean =
    return new RegExp(pattern, flag).test(testStr);
 }
 
+export function genArrayRandom<T>(length: number, charList: T[]): T[] {
+   if (charList.length <= 1) {
+      throw new Error('character list must have at least one element');
+   }
+   // convert charList to Set, which removes any duplicate values, and then convert back to Array
+   const charsUnique = [...new Set(charList)];
+   // create array with specified length and fill with random characters from list, then convert to string
+   return [...Array(length)].map(() => getRandomElement(charsUnique));
+}
+
 export function genCode(codeLength: number, charList: Array<string>, wordList: Array<string>): string {
    if (!Number.isInteger(codeLength) || codeLength <= 0) {
       throw new Error('First argument must be an integer greater than 0');
    }
    // convert random array to string
-   const code: string = getRandomArray(codeLength, charList).join('');
+   const code: string = genArrayRandom(codeLength, charList).join('');
    // ignore any word whose length is greater than codeLength, then set match to true if any word is contained in code string
    const match: boolean = wordList
       .filter(word => word.length <= codeLength)

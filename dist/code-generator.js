@@ -95,16 +95,6 @@ function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 exports.getRandomElement = getRandomElement;
-function getRandomArray(length, charList) {
-    if (charList.length <= 1) {
-        throw new Error('character list must have at least one element');
-    }
-    // convert charList to Set, which removes any duplicate values, and then convert back to Array
-    var charsUnique = __spread(new Set(charList));
-    // create array with specified length and fill with random characters from list, then convert to string
-    return __spread(Array(length)).map(function () { return getRandomElement(charsUnique); });
-}
-exports.getRandomArray = getRandomArray;
 function containsWord(testStr, word, matchCase) {
     if (matchCase === void 0) { matchCase = false; }
     if (testStr.length === 0 || word.length === 0) {
@@ -119,12 +109,22 @@ function containsWord(testStr, word, matchCase) {
     return new RegExp(pattern, flag).test(testStr);
 }
 exports.containsWord = containsWord;
+function genArrayRandom(length, charList) {
+    if (charList.length <= 1) {
+        throw new Error('character list must have at least one element');
+    }
+    // convert charList to Set, which removes any duplicate values, and then convert back to Array
+    var charsUnique = __spread(new Set(charList));
+    // create array with specified length and fill with random characters from list, then convert to string
+    return __spread(Array(length)).map(function () { return getRandomElement(charsUnique); });
+}
+exports.genArrayRandom = genArrayRandom;
 function genCode(codeLength, charList, wordList) {
     if (!Number.isInteger(codeLength) || codeLength <= 0) {
         throw new Error('First argument must be an integer greater than 0');
     }
     // convert random array to string
-    var code = getRandomArray(codeLength, charList).join('');
+    var code = genArrayRandom(codeLength, charList).join('');
     // ignore any word whose length is greater than codeLength, then set match to true if any word is contained in code string
     var match = wordList
         .filter(function (word) { return word.length <= codeLength; })
