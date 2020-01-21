@@ -35,7 +35,7 @@ View code for the Desmos anagram coding exercise here: https://codepen.io/bradyl
    
       `npm start`
 
-5. Run steps 2 through 4:
+5. Run steps 2 - 4:
 
       `npm run all -- <filename>`
    
@@ -43,7 +43,7 @@ View code for the Desmos anagram coding exercise here: https://codepen.io/bradyl
 
       `npm run all`
       
-6 View output in your terminal. It should look something like this:
+6. View output in your terminal. It should look something like this:
 
       ```
       //////////////
