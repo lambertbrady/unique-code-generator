@@ -2,6 +2,7 @@ const fetch =  require('node-fetch');
 
 // number defining length of code to be generated
 const codeLength: number = 6;
+const numCodes: number = 10;
 // character arrays defining possible characters for use in generating code
 const codeCharsIncluded: Array<string> = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 const codeCharsExcluded: Array<string> = ['I', 'L', '1', '0', 'O'];
@@ -69,8 +70,35 @@ export function genCode(codeLength: number, charList: Array<string>, wordList: A
    return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 
+export function addUnique<T>(arr: T[], generator: Function, ...genArgs: any[]): T[] {
+   const code = generator.apply(undefined, genArgs);
+   return (arr.includes(code)) ? addUnique(arr, generator, ...genArgs) : [...arr, code];
+}
+
+export function genArrayUnique<T>(length: number, arr: T[], generator: Function, ...genArgs: any[]): T[] {
+   return (length === arr.length) ? arr : genArrayUnique(length, addUnique(arr, generator, ...genArgs), generator, ...genArgs);
+}
+
+export function genCodeArray(numCodes: number, codeLength: number, charList: string[], wordList: string[], codeArray = <string[]>[]): string[] {
+   return genArrayUnique(numCodes, codeArray, genCode, codeLength, charList, wordList);
+}
+
+export function genCodeList(numCodes: number, codeLength: number, charList: string[], wordList: string[], list = <string[]>[]): string[] {
+   while(list.length < numCodes) {
+      const code = genCode(codeLength, charList, wordList);
+      if (!list.includes(code)) {
+         list.push(code);
+      }
+   }
+   return list;
+}
+
 const charsPossible = getArrayDifference(codeCharsIncluded, codeCharsExcluded);
 fetchWords(codeWordsForbiddenURL).then(words => {
    const code = genCode(codeLength, charsPossible, words);
    console.log(`//////////////\n/// ${code} ///\n//////////////`);
+   console.log('___genCodeList___');
+   console.log(genCodeList(numCodes, codeLength, charsPossible, words));
+   console.log('___genCodeArray___');
+   console.log(genCodeArray(numCodes, codeLength, charsPossible, words));
 });

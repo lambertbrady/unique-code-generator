@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fetch = require('node-fetch');
 // number defining length of code to be generated
 const codeLength = 6;
+const numCodes = 10;
 // character arrays defining possible characters for use in generating code
 const codeCharsIncluded = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 const codeCharsExcluded = ['I', 'L', '1', '0', 'O'];
@@ -80,8 +81,35 @@ function genCode(codeLength, charList, wordList) {
     return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 exports.genCode = genCode;
+function addUnique(arr, generator, ...genArgs) {
+    const code = generator.apply(undefined, genArgs);
+    return (arr.includes(code)) ? addUnique(arr, generator, ...genArgs) : [...arr, code];
+}
+exports.addUnique = addUnique;
+function genArrayUnique(length, arr, generator, ...genArgs) {
+    return (length === arr.length) ? arr : genArrayUnique(length, addUnique(arr, generator, ...genArgs), generator, ...genArgs);
+}
+exports.genArrayUnique = genArrayUnique;
+function genCodeArray(numCodes, codeLength, charList, wordList, codeArray = []) {
+    return genArrayUnique(numCodes, codeArray, genCode, codeLength, charList, wordList);
+}
+exports.genCodeArray = genCodeArray;
+function genCodeList(numCodes, codeLength, charList, wordList, list = []) {
+    while (list.length < numCodes) {
+        const code = genCode(codeLength, charList, wordList);
+        if (!list.includes(code)) {
+            list.push(code);
+        }
+    }
+    return list;
+}
+exports.genCodeList = genCodeList;
 const charsPossible = getArrayDifference(codeCharsIncluded, codeCharsExcluded);
 fetchWords(codeWordsForbiddenURL).then(words => {
     const code = genCode(codeLength, charsPossible, words);
     console.log(`//////////////\n/// ${code} ///\n//////////////`);
+    console.log('___genCodeList___');
+    console.log(genCodeList(numCodes, codeLength, charsPossible, words));
+    console.log('___genCodeArray___');
+    console.log(genCodeArray(numCodes, codeLength, charsPossible, words));
 });
