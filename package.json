@@ -10,6 +10,7 @@
    "scripts": {
       "build": "node ./node_modules/.bin/tsc",
       "test": "node ./node_modules/.bin/jasmine",
-      "start": "func() { node ./dist/${1-code\"-\"generator.js}; }; func"
+      "start": "func() { node ./dist/${1-code\"-\"generator.js}; }; func",
+      "all": "func() { npm run build && npm test && npm start -- ${1}; }; func"
    }
 }

@@ -34,8 +34,16 @@ View code for the Desmos anagram coding exercise here: https://codepen.io/bradyl
    If you just want to run `code-generator.js`, then run:
    
       `npm start`
+
+5. Run steps 2 through 4:
+
+      `npm run all -- <filename>`
+   
+   Or simply:
+
+      `npm run all`
       
-5. View output in your terminal. It should look something like this:
+6 View output in your terminal. It should look something like this:
 
       ```
       //////////////
@@ -43,6 +51,6 @@ View code for the Desmos anagram coding exercise here: https://codepen.io/bradyl
       //////////////
       ```
 
-6. Feel free to change variables for the generated code output. These values are included at the top of `code-generator` and include `codeLength`, `codeCharsIncluded`, and `codeCharsExcluded`.
+7. Feel free to change variables for the generated code output. These values are included at the top of `code-generator` and include `codeLength`, `codeCharsIncluded`, and `codeCharsExcluded`.
 
-***Note:** this project assumes you to have node installed*
+***Note:** this project assumes you have node installed*

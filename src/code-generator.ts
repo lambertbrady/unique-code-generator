@@ -39,15 +39,17 @@ export function getRandomArray<T>(length: number, charList: T[]): T[] {
    return [...Array(length)].map(() => getRandomElement(charsUnique));
 }
 
-export function containsWord(testStr: string, word: string): boolean {
+export function containsWord(testStr: string, word: string, matchCase: boolean = false): boolean {
    if (testStr.length === 0 || word.length === 0) {
       throw new Error("Each argument must be string with length greater than 0");
    }
    // match 0 or more instances of any character
    const matcher: string = '.*';
    // pattern for 'test' is '.*t.*e.*s.*t.*'
-   const pattern: string = matcher + [...word].join(matcher) + matcher;
-   return new RegExp(pattern, 'gi').test(testStr);
+   const pattern: string = matcher + Array.from(word).join(matcher) + matcher;
+   // use case instensitive flag when matchCase is false
+   const flag: string = (matchCase) ? 'g' : 'gi';
+   return new RegExp(pattern, flag).test(testStr);
 }
 
 export function genCode(codeLength: number, charList: Array<string>, wordList: Array<string>): string {
@@ -63,7 +65,7 @@ export function genCode(codeLength: number, charList: Array<string>, wordList: A
          if (isMatch) return isMatch;
          return containsWord(code, word);
       }, false);
-   // generate a new code and try again if any match is found, otherwise return successful code
+   // generate a new code if any match is found, otherwise return successful code
    return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 

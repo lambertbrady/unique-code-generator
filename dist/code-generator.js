@@ -105,15 +105,18 @@ function getRandomArray(length, charList) {
     return __spread(Array(length)).map(function () { return getRandomElement(charsUnique); });
 }
 exports.getRandomArray = getRandomArray;
-function containsWord(testStr, word) {
+function containsWord(testStr, word, matchCase) {
+    if (matchCase === void 0) { matchCase = false; }
     if (testStr.length === 0 || word.length === 0) {
         throw new Error("Each argument must be string with length greater than 0");
     }
     // match 0 or more instances of any character
     var matcher = '.*';
     // pattern for 'test' is '.*t.*e.*s.*t.*'
-    var pattern = matcher + __spread(word).join(matcher) + matcher;
-    return new RegExp(pattern, 'gi').test(testStr);
+    var pattern = matcher + Array.from(word).join(matcher) + matcher;
+    // use case instensitive flag when matchCase is false
+    var flag = (matchCase) ? 'g' : 'gi';
+    return new RegExp(pattern, flag).test(testStr);
 }
 exports.containsWord = containsWord;
 function genCode(codeLength, charList, wordList) {
@@ -130,7 +133,7 @@ function genCode(codeLength, charList, wordList) {
             return isMatch;
         return containsWord(code, word);
     }, false);
-    // generate a new code and try again if any match is found, otherwise return successful code
+    // generate a new code if any match is found, otherwise return successful code
     return (match) ? genCode(codeLength, charList, wordList) : code;
 }
 exports.genCode = genCode;
