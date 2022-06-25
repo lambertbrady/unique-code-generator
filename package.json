@@ -4,7 +4,7 @@
       "@types/jasmine": "^3.5.0",
       "@types/node-fetch": "^2.5.4",
       "jasmine": "^3.5.0",
-      "node-fetch": "^2.6.1",
+      "node-fetch": "^2.6.7",
       "typescript": "^3.7.4"
    },
    "scripts": {
